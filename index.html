@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <title>Flappy Bird Clone</title>
+</head>
+
+<body style="height: 100vh; background: #111; text-align: center;touch-action: manipulation;">
+  <canvas id="c" width="400" height="400"></canvas>
+  <script>
+    context = c.getContext("2d");
+    const passaro = new Image();
+    passaro.src = "passaro.png";
+    passaroX = passaroY = pontos = melhorPontuacao = 0;
+    interval = birdSize = canoWidth = canoSuperiorY = 22;
+    passaroC = canoDistancia = 90;
+    canvasSize = canoX = 400;
+    c.onclick = () => (passaroY = 9);
+    setInterval(() => {
+      context.fillStyle = "skyblue";
+      context.fillRect(0, 0, canvasSize, canvasSize); 
+      passaroC -= passaroY -= 0.5; // Gravidade
+      context.drawImage(passaro, passaroX, passaroC, birdSize * (524 / 374), birdSize); //passaro
+      context.fillStyle = "red";
+      canoX -= 8; // Movimentar o cano
+      canoX < -canoWidth &&  
+        ((canoX = canvasSize), (canoSuperiorY = canoDistancia * Math.random())); // Resetar cano e fazer distancia aleatoria
+      context.fillRect(canoX, 0, canoWidth, canoSuperiorY); // desenhar cano superior
+      context.fillRect(canoX, canoSuperiorY + canoDistancia, canoWidth, canvasSize); // desenhar cano inferior
+      context.fillStyle = "white";
+      context.strokeText;
+      context.strokeText(`Pontuação: ${pontos++}`, 9, 25); // aumentar e exibir pontuação com contorno na pontuação
+      context.fillText(`Pontuação: ${pontos++}`, 9, 25); // aumentar e exibir pontuação
+      melhorPontuacao = melhorPontuacao < pontos ? pontos : melhorPontuacao; // sobrescrevendo melhor pontuação anterior
+      context.font = "25px VT323";
+      context.strokeText(`Melhor Pontuação: ${melhorPontuacao}`, 9, 50); // exibir melhor pontuação com contorno
+      context.fillText(`Melhor Pontuação: ${melhorPontuacao}`, 9, 50); // exibir melhor pontuação
+      (((passaroC < canoSuperiorY || passaroC > canoSuperiorY + canoDistancia) && canoX < birdSize * (524 / 374)) || passaroC > canvasSize) && 
+      ((passaroY = 0), (passaroC = 200), (canoX = canvasSize), (pontos = 0)); // passaro perde caia da tela ou colida
+    }, interval)
+  </script>
+</body>
